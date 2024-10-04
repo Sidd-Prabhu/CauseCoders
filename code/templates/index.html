@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CauseCoders</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Construction Building Helper</h1>
+        <div class="user-icon" onclick="alert('Login functionality goes here!')">
+            User
+        </div>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#option1" onclick="alert('Home Page goes here!')">Home</a></li>
+                <li><a href="/">New Building</a></li>
+                <li><a href="/history">My Buildings</a></li>
+                <li><a href="#option3" onclick="alert('Comparison functionality goes here!')">Compare</a></li>
+                <li><a href="#option4" onclick="alert('Account detail functionality!')">My profile</a></li>
+                <li><a href="/history">History</a></li>
+                <li><a href="#option4" onclick="alert('Page info functionality goes here!')">About Us</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <h1>Build Helper Form</h1>
+            <form method="POST" id="myForm" action="/" onsubmit="showLoader()">
+            <label for="username">User Name:</label>
+            <input type="text" name="username" id="username" required>
+            <label for="projectname">Project Name:</label>
+            <input type="text" name="projectname" id="projectname" required>
+            <label for="sitelocation">Site Location:</label>
+            <input type="text" name="sitelocation" id="sitelocation" required>
+            <label for="buildingtype">Building Type:</label>
+            <select id="buildingtype" name="buildingtype" required>
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+                <option value="industrial">Industrial</option>-
+            </select>
+            <label for="building_height">Height of Building (Number of Floors):</label>
+            <input type="number" id="building_height" name="building_height" required><br>
+            <label for="building_size">Area size Building (In sq.mt):</label>
+            <input type="number" id="building_size" name="building_size" required><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="loader" class="loader" style="display:none;">
+            <img src="{{ url_for('static', filename='building1.gif') }}" alt="Loading....">
+        </div>
+        <script>
+            function showLoader() {
+                document.getElementById('myForm').style.display = 'none';
+                document.getElementById('loader').style.display = 'flex';
+            }
+        </script>
+        </main>
+    </div>
+</body>
+</html>
