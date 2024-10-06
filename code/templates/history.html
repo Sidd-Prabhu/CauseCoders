@@ -15,6 +15,7 @@
     </header>
     <div class="container">
         <aside class="sidebar">
+            <!-- <h2>Options</h2> -->
             <ul>
                 <li><a href="#option1" onclick="alert('Home Page goes here!')">Home</a></li>
                 <li><a href="/">New Building</a></li>
@@ -38,18 +39,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in data_hist %}
+                    {% for item in data_all %}
                         <tr>
-                            <td>{{ item.username }}</td>
-                            <td>{{ item.projectname }}</td>
-                            <td>{{ item.sitelocation }}</td>
-                            <td>{{ item.buildingtype }}</td>
-                            <td>{{ item.score }}</td>
+                            <td>{{item['username']}}</td>
+                            <td>{{item['projectname']}}</td>
+                            <td>{{item['sitelocation']}}</td>
+                            <td>{{item['buildingtype']}}</td>
+                            <td>{{item['score']}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </main>
     </div>
+<!--    <script src="{{ url_for('static', filename='script.js') }}"></script>-->
 </body>
 </html>
