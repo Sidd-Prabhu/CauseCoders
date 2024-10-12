@@ -6,6 +6,9 @@ import os
 import requests
 import re
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 
 app = Flask(__name__)
@@ -170,6 +173,42 @@ def report_data(report):
         return df.to_string(index=False)
     else:
         print("No parameters and scores found. Please check the format of your input.")
+
+def createGraph(file_path):
+    # CSV file path (adjust as necessary)
+    csv_file_path = file_path
+    # Read the dataset from CSV
+    factors, scores = read_data_from_csv(csv_file_path)
+    # Create the bar plot
+    bars = plt.bar(factors, scores, color='maroon', width=0.4)
+    # Fixing overlapping labels by rotating them
+    plt.xticks(rotation=45, ha="right")
+    # Display values on top of each bar
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.1, round(yval, 2), ha='center', va='bottom')
+    # Set y-axis ticks to reflect a scale of 10
+    plt.yticks(np.arange(0, 11, 1))
+    plt.xlabel("Factors")
+    plt.ylabel("Score (Out of 10)")
+    plt.title("Evaluation Report (Scale of 10)")
+    # Adjust layout to prevent cutoff
+    plt.tight_layout()
+    # Define the specific path to save the image
+    output_directory = 'graphs'
+    os.makedirs(output_directory, exist_ok=True)  # Create directory if it doesn't exist
+    # Save the figure to the specific path
+    file_path = os.path.join(output_directory, 'bar_graph.png')
+    plt.savefig(file_path, format='png')
+
+# Function to read data from CSV
+def read_data_from_csv(file_path):
+    # Read CSV into a pandas DataFrame
+    df = pd.read_csv(file_path)
+    # Extract 'Factors' and 'Score' columns and convert to lists
+    factors = df['Parameter'].tolist()
+    scores = df['Score'].tolist()
+    return factors, scores
 
 
 @app.route('/', methods=['GET', 'POST'])
