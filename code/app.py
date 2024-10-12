@@ -14,7 +14,7 @@ OPENWEATHER_API_KEY = ''
 
 # Watsonx.ai API settings
 WATSONX_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-WATSONX_MODEL_ID = "ibm/granite-13b-chat-v2"
+WATSONX_MODEL_ID2 = "ibm/granite-13b-chat-v2"
 WATSONX_PROJECT_ID = ""
 WATSONX_AUTH_TOKEN = ""
 
@@ -117,7 +117,7 @@ def get_query_watsonx(unique_id):
             "max_new_tokens": 900,
             "repetition_penalty": 1.05
         },
-        "model_id": WATSONX_MODEL_ID,
+        "model_id": WATSONX_MODEL_ID2,
         "project_id": WATSONX_PROJECT_ID
     }
     headers = {
