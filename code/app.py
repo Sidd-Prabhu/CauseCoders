@@ -55,6 +55,7 @@ def extract_json_from_markdown(response_text):
    else:
        raise ValueError("No JSON found between ```json and ``` markers.")
 
+
 # Function to get information from Watsonx.ai
 def get_watsonx_info(buildingtype, lat, lon, name):
    prompt = f"""We are constructing a building of type {buildingtype} at location having latitude={lat}, longitude={lon} which is in city {name}. Please give us information about the area and below points:
@@ -89,21 +90,6 @@ def get_watsonx_info(buildingtype, lat, lon, name):
    data = response.json()
    generated_text=data['results'][0]['generated_text']
    return generated_text
-
-def extract_json_from_markdown(response_text):
-    # Look for the JSON block between ```json and ```
-    json_block = re.search(r"```json\s*(\{.*?\})\s*```", response_text, re.DOTALL)
-    if json_block:
-        json_str = json_block.group(1)  # Extract the JSON part
-        try:
-            # Try loading the extracted JSON to ensure it's valid
-            parsed_json = json.loads(json_str)
-            return parsed_json
-
-        except json.JSONDecodeError as e:
-            raise Exception(f"Invalid JSON format: {e}")
-    else:
-        raise ValueError("No JSON found between ```json and ``` markers.")
 
 
 # Function to get final O/P using granite model
@@ -255,7 +241,6 @@ def index():
             return jsonify({"error": str(e)}), 500
         return redirect(url_for('output', query_watsonx=query_watsonx))
     return render_template('index.html')
-
 
 
 @app.route('/output/')
