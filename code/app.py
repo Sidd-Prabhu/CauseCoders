@@ -16,6 +16,7 @@ OPENWEATHER_API_KEY = '<api-key>'
 # Watsonx.ai API settings
 WATSONX_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
 WATSONX_MODEL_ID = "meta-llama/llama-3-8b-instruct"
+WATSONX_MODEL_ID2 = "ibm/granite-13b-chat-v2"
 WATSONX_PROJECT_ID = "<id>"
 WATSONX_AUTH_TOKEN = "<token>"
 
@@ -88,7 +89,6 @@ def get_watsonx_info(buildingtype, lat, lon, name):
    data = response.json()
    generated_text=data['results'][0]['generated_text']
    return generated_text
-   #return data['results'][0]['generated_text'].json()
 
 def extract_json_from_markdown(response_text):
     # Look for the JSON block between ```json and ```
@@ -142,6 +142,7 @@ def get_watsonx_info(buildingtype, lat, lon, city):
     return generated_text
 
 
+# Function to get final O/P using granite model
 def get_query_watsonx(unique_id):
     data_json = load_data()
     if unique_id not in data_json:
@@ -172,7 +173,7 @@ def get_query_watsonx(unique_id):
             "max_new_tokens": 900,
             "repetition_penalty": 1.05
         },
-        "model_id": WATSONX_MODEL_ID,
+        "model_id": WATSONX_MODEL_ID2,
         "project_id": WATSONX_PROJECT_ID
     }
     headers = {
@@ -277,18 +278,13 @@ def index():
                     return jsonify({"error": "No record found for this unique_id"}), 404
                 
                 watsonx_info_from_model = get_watsonx_info(buildingtype, lat, lon, name)
-                print(f"type of watsonx_info_from_model = {type(watsonx_info_from_model)}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print(watsonx_info_from_model)
                 watsonx_info = extract_json_from_markdown(watsonx_info_from_model)
-                print(f"type of watsonx_info ====={type(watsonx_info)}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
                 # Update the existing entry with Watsonx info
                 data_store[unique_id].update({"watsonx_info": watsonx_info})
                 # Save the updated data back to the file
                 save_data(data_store)
 
                 query_watsonx = get_query_watsonx(unique_id)
-                print(query_watsonx)
             except Exception as e:
                 return jsonify({"error": str(e)}), 500
         except requests.exceptions.RequestException as e:
