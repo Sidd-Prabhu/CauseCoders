@@ -30,6 +30,10 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
 .sidebar {
     width: 200px;
     background-color: #444;
