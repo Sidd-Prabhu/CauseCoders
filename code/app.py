@@ -106,42 +106,6 @@ def extract_json_from_markdown(response_text):
         raise ValueError("No JSON found between ```json and ``` markers.")
 
 
-# Function to get information from Watsonx.ai
-def get_watsonx_info(buildingtype, lat, lon, city):
-    prompt = f"""We are constructing a building of type {buildingtype} at location having latitude={lat}, longitude={lon} which is in city {city}. Please give us information about the area and below points:
-   1.zoning laws
-   2.soil type in aspect of bearing capacity, moisture content, plasticity index, compaction characteristics, shear strength, permeability, consolidation properties, PH level.
-   3.Site Topography
-   4.environmental conditions
-   5.essentials water in aspect of water source in that area and ground water level
-   6.utility access in aspect of electricity, network, water, transportation
-   7.terrain history in aspect of whether that land is prone to natural calamities
-   8.Safety Standards
-   9.Pollution/Noise considerations in this area
-   Please respond exact details in measurement or numbers in short with **valid JSON** format only"""
-    body = {
-        "input": prompt,
-        "parameters": {
-            "decoding_method": "greedy",
-            "max_new_tokens": 900,
-            "repetition_penalty": 1.05
-        },
-        "model_id": WATSONX_MODEL_ID,
-        "project_id": WATSONX_PROJECT_ID
-    }
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {WATSONX_AUTH_TOKEN}"
-    }
-    response = requests.post(WATSONX_URL, headers=headers, json=body)
-    if response.status_code != 200:
-        raise Exception("Non-200 response: " + str(response.text))
-    data = response.json()
-    generated_text = data['results'][0]['generated_text']
-    return generated_text
-
-
 # Function to get final O/P using granite model
 def get_query_watsonx(unique_id):
     data_json = load_data()
