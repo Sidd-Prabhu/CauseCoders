@@ -9,11 +9,12 @@ import re
 app = Flask(__name__)
 DATA_FILE = 'data.json'
 # OpenWeather API settings
-OPENWEATHER_API_KEY = '<key>'
+OPENWEATHER_API_KEY = '<api-key>'
 
 # Watsonx.ai API settings
 WATSONX_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-WATSONX_MODEL_ID = "ibm/granite-13b-chat-v2"
+#WATSONX_MODEL_ID = "ibm/granite-13b-chat-v2"
+WATSONX_MODEL_ID = "meta-llama/llama-3-8b-instruct"
 WATSONX_PROJECT_ID = "<id>"
 WATSONX_AUTH_TOKEN = "<token>"
 
@@ -32,24 +33,28 @@ def save_data(data):
    with open(DATA_FILE, 'w') as file:
        json.dump(data, file, indent=4)
 
+
 def extract_json_from_markdown(response_text):
    # Look for the JSON block between ```json and ```
    json_block = re.search(r"```json\s*(\{.*?\})\s*```", response_text, re.DOTALL)
    if json_block:
        json_str = json_block.group(1)  # Extract the JSON part
+       # Step 1: Replace number ranges (e.g., 25-35) with quoted strings ("25-35")
+       json_str = re.sub(r'(\d+)\s*-\s*(\d+)', r'"\1-\2"', json_str)
+       # Step 2: Identify numeric values followed by non-standard units (e.g., mm/year, dB) and quote them
+       json_str = re.sub(r'(\d+)\s*([a-zA-Z/%]+)', r'"\1 \2"', json_str)
        try:
-           # Try loading the extracted JSON to ensure it's valid
+           # Step 3: Try loading the cleaned-up JSON to ensure it's valid
            parsed_json = json.loads(json_str)
            return parsed_json
-          
        except json.JSONDecodeError as e:
            raise Exception(f"Invalid JSON format: {e}")
    else:
        raise ValueError("No JSON found between ```json and ``` markers.")
 
 # Function to get information from Watsonx.ai
-def get_watsonx_info(buildingtype, lat, lon, city):
-   prompt = f"""We are constructing a building of type {buildingtype} at location having latitude={lat}, longitude={lon} which is in city {city}. Please give us information about the area and below points:
+def get_watsonx_info(buildingtype, lat, lon, name):
+   prompt = f"""We are constructing a building of type {buildingtype} at location having latitude={lat}, longitude={lon} which is in city {name}. Please give us information about the area and below points:
    1.zoning laws
    2.soil type in aspect of bearing capacity, moisture content, plasticity index, compaction characteristics, shear strength, permeability, consolidation properties, PH level.
    3.Site Topography
@@ -60,7 +65,6 @@ def get_watsonx_info(buildingtype, lat, lon, city):
    8.Safety Standards
    9.Pollution/Noise considerations in this area
    Please respond exact details in measurement or numbers in short with **valid JSON** format only"""
-   #Give us exact details in measurement or numbers in short JSON format only. Provide direct json file, don't add any other lines at start or end of JSON"""
    body = {
        "input": prompt,
        "parameters": {
@@ -94,7 +98,7 @@ def index():
        building_height = request.form['building_height']
        building_size = request.form['building_size']
        unique_id = str(uuid.uuid4())
-       city = ''
+       name = ''
        try:
            lat, lon = map(float, sitelocation.split(','))
        except ValueError:
@@ -122,7 +126,14 @@ def index():
        try:
            api_response = requests.get(api_url)
            api_response.raise_for_status()
-           data_store[unique_id].update(api_response.json())
+
+           #extracting city name from api_response
+           weather_data = api_response.json()
+           name = weather_data.get('name','')
+
+           #update the data store with weather data and city name
+           data_store[unique_id].update(weather_data)
+           data_store[unique_id]['city_name']= name #adding city name to data
            save_data(data_store)
            
            # Watsonx.ai API call
@@ -130,9 +141,9 @@ def index():
                 data_store = load_data()  # Load the existing data
                 if unique_id not in data_store:
                     return jsonify({"error": "No record found for this unique_id"}), 404
-                # Keep the existing data, don't overwrite
-                watsonx_info_from_model = get_watsonx_info(buildingtype, lat, lon, city)
-                print(f"type of {type(watsonx_info_from_model)}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                
+                watsonx_info_from_model = get_watsonx_info(buildingtype, lat, lon, name)
+                print(f"type of watsonx_info_from_model = {type(watsonx_info_from_model)}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 print(watsonx_info_from_model)
                 watsonx_info = extract_json_from_markdown(watsonx_info_from_model)
                 print(f"type of watsonx_info ====={type(watsonx_info)}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
