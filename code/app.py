@@ -40,6 +40,8 @@ def save_data(data):
 def extract_json_from_markdown(response_text):
    # Look for the JSON block between ```json and ```
    json_block = re.search(r"```json\s*(\{.*?\})\s*```", response_text, re.DOTALL)
+   if not json_block:
+        json_block = re.search(r"```\s*(\{.*?\})\s*```", response_text, re.DOTALL)
    if json_block:
        json_str = json_block.group(1)  # Extract the JSON part
        # Step 1: Replace number ranges (e.g., 25-35) with quoted strings ("25-35")
@@ -47,9 +49,7 @@ def extract_json_from_markdown(response_text):
        # Step 2: Identify numeric values followed by non-standard units (e.g., mm/year, dB) and quote them
        json_str = re.sub(r'(\d+)\s*([a-zA-Z/%]+)', r'"\1 \2"', json_str)
        try:
-           # Step 3: Try loading the cleaned-up JSON to ensure it's valid
-           parsed_json = json.loads(json_str)
-           return parsed_json
+           return json_str
        except json.JSONDecodeError as e:
            raise Exception(f"Invalid JSON format: {e}")
    else:
@@ -68,7 +68,7 @@ def get_watsonx_info(buildingtype, lat, lon, name):
    7.terrain history in aspect of whether that land is prone to natural calamities
    8.Safety Standards
    9.Pollution/Noise considerations in this area
-   Please respond exact details in measurement or numbers in short with **valid JSON** format only"""
+   Please respond exact details in measurement or numbers in very short and exact with only in **valid JSON** format only, no any other text"""
    body = {
        "input": prompt,
        "parameters": {
@@ -98,7 +98,8 @@ def get_query_watsonx(unique_id):
     if unique_id not in data_json:
         return jsonify({"error": "No record found for this unique_id"}), 404
     data=data_json[unique_id]
-    prompt = f"""Given the data below for a proposed commercial building in Lonavla, create a detailed descriptive report that evaluates the location for the construction of the building. Please assess the following parameters: 
+    prompt = f"""Given the data below, create a detailed descriptive report that evaluates the location for the construction of the building. 
+    Please assess the following parameters and score for each: 
       Weather conditions
       Zoning laws
       Soil characteristics
@@ -111,7 +112,7 @@ def get_query_watsonx(unique_id):
       Pollution and noise levels
       For each parameter, provide:
       1.A descriptive evaluation based on the provided data, highlighting both positive aspects and potential risks. 
-      2.A score from 1 to 10 for each parameter based on its suitability for the construction of the commercial building. 
+      2.A score from 1 to 10 for each parameter based on its suitability for the construction. 
       3.At the end of the report, calculate and provide an average score based on all the parameters. Structure the report in a well-organized and professional manner.
       {data}"""
 
