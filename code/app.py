@@ -274,6 +274,7 @@ def display():
    data_all = []
    for d in data.values():
        data_hist = {
+           "unique_id": d.get('unique_id', 'N/A'),
            "username": d.get('username', 'N/A'),
            "projectname": d.get('projectname', 'N/A'),
            "sitelocation": d.get('sitelocation', 'N/A'),
@@ -282,6 +283,12 @@ def display():
        }
        data_all.append(data_hist)
    return render_template('history.html', data_all=data_all)
+
+
+@app.route('/compare/<unique_id>')
+def compare(unique_id):
+    print(unique_id)
+    return render_template('compare.html', unique_id=unique_id)
 
 
 if __name__ == '__main__':
