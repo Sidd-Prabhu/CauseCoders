@@ -13,15 +13,18 @@ import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 DATA_FILE = 'data.json'
+
+uniqueID = ""
 # OpenWeather API settings
-OPENWEATHER_API_KEY = '<api-key>'
+OPENWEATHER_API_KEY = 'bd5e378503939ddaee76f12ad7a97608'
 
 # Watsonx.ai API settings
-WATSONX_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+# WATSONX_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+WATSONX_URL = "https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
 WATSONX_MODEL_ID = "meta-llama/llama-3-8b-instruct"
 WATSONX_MODEL_ID2 = "ibm/granite-13b-chat-v2"
-WATSONX_PROJECT_ID = "<id>"
-WATSONX_AUTH_TOKEN = "<token>"
+WATSONX_PROJECT_ID = "c84989b3-3050-4dba-838e-66b737000a7a"
+WATSONX_AUTH_TOKEN = "eyJraWQiOiIyMDI0MTAwMjA4NDIiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02OTIwMDA0U0RKIiwiaWQiOiJJQk1pZC02OTIwMDA0U0RKIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiY2Q1YzYxNjEtOGM2OC00MjU3LThlMjMtZTA1NWIxOTI4ZDBkIiwiaWRlbnRpZmllciI6IjY5MjAwMDRTREoiLCJnaXZlbl9uYW1lIjoiU29tZXNoIiwiZmFtaWx5X25hbWUiOiJMYWQiLCJuYW1lIjoiU29tZXNoIExhZCIsImVtYWlsIjoic29tZXNoX2xhZEBwZXJzaXN0ZW50LmNvbSIsInN1YiI6InNvbWVzaF9sYWRAcGVyc2lzdGVudC5jb20iLCJhdXRobiI6eyJzdWIiOiJzb21lc2hfbGFkQHBlcnNpc3RlbnQuY29tIiwiaWFtX2lkIjoiSUJNaWQtNjkyMDAwNFNESiIsIm5hbWUiOiJTb21lc2ggTGFkIiwiZ2l2ZW5fbmFtZSI6IlNvbWVzaCIsImZhbWlseV9uYW1lIjoiTGFkIiwiZW1haWwiOiJzb21lc2hfbGFkQHBlcnNpc3RlbnQuY29tIn0sImFjY291bnQiOnsidmFsaWQiOnRydWUsImJzcyI6IjcyYzEwODQxZTQ2ODRjMjE4ZDM4ZjZlOTllYTkzNDIyIiwiZnJvemVuIjp0cnVlfSwiaWF0IjoxNzI4NzY3NDU4LCJleHAiOjE3Mjg3NzEwNTgsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.c9YcMKA2-7CVTU19Jeoqgqob6l22MBecRyBwWkxCh6_z_aItqnfpCsuQV63DHATfxvaSyKVtfL5AP-oL14xmTh3iK0y8Z3JA_TmrAxwUtGhWZVVGRWPPOcYoCS8Gw5EDD-JMyTF6xtlQH8TzvnlixyKoMgTwc27Dns5zjbHkNSvj41nok_XmNObyep4QrePzOnSerCOZ-vlHiCT9NalFGKoK64Ipfyn-J7dX-CCWHkcTG7MBewGx-6M_vQZwSOYnQzTg8JVDWCUAMtbnzM_iLfc1GwPi0nm9TytQU9FaEcY6aUyroIsM8JLin2vBZhEW9cRLgXwmAKl--QMPJsxuXQ"
 
 # Function to load existing data from the JSON file
 def load_data():
@@ -148,6 +151,7 @@ def report_data(report):
 
     # Preprocess the input to remove excess newlines and standardize formatting
     report = report.strip().replace("\n\n", "\n")
+    report = report.strip().replace("**", "")
 
     # Regular expression to capture parameter names and scores
     pattern = r"^(?P<Parameter>.+?)\n.*?Score:\s*(?P<Score>\d+)/10"
@@ -170,12 +174,14 @@ def report_data(report):
         print("\nExtracted Parameters and Scores:\n")
         # Optionally, save to a CSV if needed
         df.to_csv('location_evaluation_scores.csv', index=False)
+        createGraph('location_evaluation_scores.csv')
         print(df.to_string(index=False))
         return df.to_string(index=False)
     else:
         print("No parameters and scores found. Please check the format of your input.")
 
 def createGraph(file_path):
+    global uniqueID
     # CSV file path (adjust as necessary)
     csv_file_path = file_path
     # Read the dataset from CSV
@@ -196,10 +202,10 @@ def createGraph(file_path):
     # Adjust layout to prevent cutoff
     plt.tight_layout()
     # Define the specific path to save the image
-    output_directory = 'graphs'
+    output_directory = 'static/images'
     os.makedirs(output_directory, exist_ok=True)  # Create directory if it doesn't exist
     # Save the figure to the specific path
-    file_path = os.path.join(output_directory, 'bar_graph.png')
+    file_path = os.path.join(output_directory, f"bar_graph_{uniqueID}.png")
     plt.savefig(file_path, format='png')
 
 # Function to read data from CSV
@@ -211,11 +217,11 @@ def read_data_from_csv(file_path):
     scores = df['Score'].tolist()
     return factors, scores
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    global uniqueID
 
-   if request.method == 'POST':
+    if request.method == 'POST':
        username = request.form['username']
        projectname = request.form['projectname']
        sitelocation = request.form['sitelocation']
@@ -223,6 +229,7 @@ def index():
        building_height = request.form['building_height']
        building_size = request.form['building_size']
        unique_id = str(uuid.uuid4())
+       uniqueID = unique_id
        name = ''
        try:
            lat, lon = map(float, sitelocation.split(','))
@@ -275,19 +282,22 @@ def index():
                 save_data(data_store)
 
                 query_watsonx = get_query_watsonx(unique_id)
-            except Exception as e:
+           except Exception as e:
                 return jsonify({"error": str(e)}), 500
-        except requests.exceptions.RequestException as e:
+       except requests.exceptions.RequestException as e:
             return jsonify({"error": str(e)}), 500
-        return redirect(url_for('output', query_watsonx=query_watsonx))
+       return redirect(url_for('output', query_watsonx=query_watsonx))
     return render_template('index.html')
 
 
 @app.route('/output/')
 def output():
+    global uniqueID
+    file_path = os.path.join('static/images', f"bar_graph_{uniqueID}.png")
+    image_path = f"bar_graph_{uniqueID}.png"
     data_temp = request.args.get('query_watsonx')
     if data_temp:
-        return render_template('output.html', data_temp=data_temp)
+        return render_template('output.html', data_temp=data_temp, image_path=image_path)
     else:
         return "No data found for the provided ID", 404
 
