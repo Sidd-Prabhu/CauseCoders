@@ -56,6 +56,16 @@ def extract_json_from_markdown(response_text):
        raise ValueError("No JSON found between ```json and ``` markers.")
 
 
+def extract_add_score(text):
+    print(text)
+    match = re.search(r'Average Score:\s*([\d.]+)/10', text)
+    print("Match is ")
+    print(match)
+    if match:
+        return float(match.group(1))
+    return None
+
+
 # Function to get information from Watsonx.ai
 def get_watsonx_info(buildingtype, lat, lon, name):
    prompt = f"""We are constructing a building of type {buildingtype} at location having latitude={lat}, longitude={lon} which is in city {name}. Please give us information about the area and below points:
@@ -234,14 +244,19 @@ def index():
                 data_store[unique_id].update({"watsonx_info": watsonx_info})
                 # Save the updated data back to the file
                 save_data(data_store)
-
                 query_watsonx = get_query_watsonx(unique_id)
-            except Exception as e:
+                # Extract Average Score from output
+                data_store = load_data()
+                avg_score = extract_add_score(query_watsonx)
+                print(avg_score)
+                data_store[unique_id].update({"score": avg_score})
+                save_data(data_store)
+           except Exception as e:
                 return jsonify({"error": str(e)}), 500
-        except requests.exceptions.RequestException as e:
+       except requests.exceptions.RequestException as e:
             return jsonify({"error": str(e)}), 500
-        return redirect(url_for('output', query_watsonx=query_watsonx))
-    return render_template('index.html')
+       return redirect(url_for('output', query_watsonx=query_watsonx))
+   return render_template('index.html')
 
 
 @app.route('/output/')
