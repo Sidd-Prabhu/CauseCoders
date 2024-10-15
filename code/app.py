@@ -82,7 +82,7 @@ def get_watsonx_info(buildingtype, lat, lon, name):
     7.terrain history in aspect of whether that land is prone to natural calamities
     8.Safety Standards
     9.Pollution/Noise considerations in this area
-    Please respond exact details in measurement or numbers in very short and exact with only in **valid JSON** format only, no any other text"""
+    Please respond exact details in measurement or numbers in very short and exact with only in **valid JSON** in ```json ``` format only, no any other text"""
     body = {
         "input": prompt,
         "parameters": {
