@@ -1,4 +1,4 @@
-# CauseCoders - BuildBuddy: A Contruction Helper  using WatsonX
+# CauseCoders - BuildBuddy: A Construction Helper using WatsonX
 
 - [Project summary](#project-summary)
   - [The issue we are hoping to solve](#the-issue-we-are-hoping-to-solve)
@@ -71,7 +71,7 @@ By integrating advanced AI capabilities, our solution not only streamlines the d
 
 Diagram and step-by-step description of the flow of our solution:
 
-![Video transcription/tran]()
+![Architecure/](images/Working.jpg)
 
 1. The user navigates to the site and fills the form for details.
 2. Watsonx AI LLAMA Model will processes the data and extracts the relevant information.
@@ -83,16 +83,14 @@ Diagram and step-by-step description of the flow of our solution:
 
 ### Solution demo video
 
-[![Watch the video]()]()
+[![Watch the video](images/logo.png)](images/logo.png)
 
 ### Project development roadmap
 The project currently does the following things.
 
-- Feature 1
-- Feature 2
-- Feature 3
-
-In the future we plan to...
+- Predict the score for construction of building
+- Give detailed explaination for score
+- Create graph for score
 
 
 ### How to run the project
@@ -105,7 +103,23 @@ In the future we plan to...
 
 ---
 
-## About us CauseCoders
+## About us 
 
-### Contributing
-- Cause Coders Members
+# CauseCoders
+
+## Team Members
+
+- Siddhesh Prabhu
+- Stuti Wali
+- Shubham Garud
+- Somesh Lad
+- Apoorva Sahu
+
+## Purpose
+This document highlights the unique strengths of each team member and promotes a sense of unity within our group.
+
+## Contributions
+If you have any additional ideas or suggestions for names, please share them with the team!
+
+## License
+Feel free to use or modify this document for your own team-building efforts.
