@@ -62,9 +62,9 @@ By integrating advanced AI capabilities, our solution not only streamlines the d
 
 ### Other tech used : 
 
--**Python**: Python which is a versatile programming language that we used for integrating AI models, handling data processing, and making API calls. Its simplicity and wide range of libraries make it ideal for developing AI-driven solutions and building scalable, efficient applications. 
+- **Python**: Python which is a versatile programming language that we used for integrating AI models, handling data processing, and making API calls. Its simplicity and wide range of libraries make it ideal for developing AI-driven solutions and building scalable, efficient applications. 
 
--**OpenWeather API**: The OpenWeather API provides real-time weather data, forecasts, and historical weather information. We integrated it into our solution to gather essential environmental parameters, such as temperature, humidity, and precipitation, which play a critical role in determining construction feasibility and ensuring safety for land access.
+- **OpenWeather API**: The OpenWeather API provides real-time weather data, forecasts, and historical weather information. We integrated it into our solution to gather essential environmental parameters, such as temperature, humidity, and precipitation, which play a critical role in determining construction feasibility and ensuring safety for land access.
 
 
 ### Solution architecture
@@ -74,7 +74,7 @@ Diagram and step-by-step description of the flow of our solution:
 ![Video transcription/tran]()
 
 1. The user navigates to the site and fills the form for details.
-2. Watsonx AI LLMA Model will processes the data and extracts the relevant information.
+2. Watsonx AI LLAMA Model will processes the data and extracts the relevant information.
 3. Watsonx AI granite Model will process data and predict the detailed output.
 4. As a output it will give detailed explanation with score and graph.
 
