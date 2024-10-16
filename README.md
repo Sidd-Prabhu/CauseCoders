@@ -60,7 +60,7 @@ By integrating advanced AI capabilities, our solution not only streamlines the d
 - **IBM Watson Prompt Lab**: Leveraged for creating and refining AI prompts that optimize the interaction between the user and the AI model. This tool helps generate more accurate and relevant responses by allowing developers to test and customize AI prompts, enhancing the solution's decision-making process. 
 
 
-### Other tech used : 
+### Other technology used : 
 
 - **Python**: Python which is a versatile programming language that we used for integrating AI models, handling data processing, and making API calls. Its simplicity and wide range of libraries make it ideal for developing AI-driven solutions and building scalable, efficient applications. 
 
