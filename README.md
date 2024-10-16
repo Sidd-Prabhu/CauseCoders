@@ -91,6 +91,8 @@ The project currently does the following things.
 - Predict the score for construction of building
 - Give detailed explaination for score
 - Create graph for score
+- ![build_buddy_roadmap](https://github.com/user-attachments/assets/049f9a2c-0eff-4276-8444-04b1e0015beb)
+
 
 ## Additional details
 
