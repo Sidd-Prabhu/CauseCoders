@@ -1,0 +1,57 @@
+body{
+    font-family: "Raleway", sans-serif;
+
+}
+
+.main-content{
+    width: 100%;
+    height: auto;
+}
+.body-container{
+    background-image: none;
+    width: 90%;
+    margin: auto;
+}
+
+.output{
+    width: 100%;
+    height: auto;
+    box-shadow:rgba(0,0,0,0.35) 0px 5px 15px;
+
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+    font-family: "Raleway", sans-serif;
+
+
+}
+.output-data{
+    padding: 20px;
+}
+.graph-img{
+  
+    width: 60%;
+    margin: auto;
+    margin-left:20%;
+}
+
+.output-heading{
+width: 100%;
+margin: left;
+padding-top: 15px;
+margin-top: 10px;
+text-align: left;
+color: brown;
+}
+
+
+.output-heading2{
+    width: 100%;
+    margin: left;
+    margin-top: 10px;
+    text-align: center;
+    color: brown;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CauseCoders</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/output.css">
+</head>
+<body>
+    <img src="../static/images/builderbuddy_logo1.png" alt="logo image" srcset=""  class="logo-img" />  
+
+    <nav>
+        <ul class="nav-elements-container">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#product">New Building</a></li> 
+            <li><a href="/history">My Buildings</a></li> 
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/#product">Product</a></li>
+        </ul>
+        <button class="login-btn">Sign Out</button>
+    </nav>  
+
+    <section class="main-content body-container">
+        <!-- <h2 class="output-heading">Builder Review Output</h2> -->
+        <div class="output">
+            <h2 class="output-heading">BuildBuddy Analysis Report:</h2>
+            <pre class="output-data">{{ data_temp }}</pre>
+        <h2 class="output-heading2">Evaluation Report</h2>
+            <!-- <img src="{{ url_for('static', filename='images/' + image_path)}} " alt="Graph" width="700" height="600"> -->
+        <img src="{{ url_for('static', filename='images/' + image_path)}}" alt="Graph" class="graph-img" width="900" height="600">
+    
+    </section>
+    </div>
+</body>
+</html>

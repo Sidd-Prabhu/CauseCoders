@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CauseCoders</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/history.css">
+</head>
+<body>
+    <img src="../static/images/builderbuddy_logo1.png" alt="logo image" srcset=""  class="logo-img" />  
+
+    <nav>
+        <ul class="nav-elements-container">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#product">New Building</a></li> 
+            <li><a href="/history">My Buildings</a></li> 
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/#product">Product</a></li>
+        </ul>
+        <button class="login-btn">Sign Out</button>
+    </nav> 
+    <div class="body-container">
+        <section class="history-container">
+            <h2>My Compare</h2>
+            <img src="{{ url_for('static', filename='images/bar_graph_' + unique_id + '.png') }}" , alt="Bar Graph" class="graph-img" width="600" height="500">
+            <br>
+    </section>
+    </div>
+<!--    <script src="{{ url_for('static', filename='script.js') }}"></script>-->
+</body>
+</html>
