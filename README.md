@@ -1,11 +1,11 @@
-# CauseCoders - BuildBuddy: A Construction Helper using WatsonX
+# CauseCoders - BuildBuddy: A Construction Helper Web Application using WatsonX
 
 - [Project summary](#project-summary)
   - [The issue we are hoping to solve](#the-issue-we-are-hoping-to-solve)
   - [How our technology solution can help](#how-our-technology-solution-can-help)
   - [Our idea](#our-idea)
 - [Technology implementation](#technology-implementation)
-  - [IBM watsonx product(s) used](#ibm-ai-services-used)
+  - [IBM Watsonx.ai models used](#ibm-ai-services-used)
   - [IBM service used](#ibm-service-used)
   - [Other IBM technology used](#other-ibm-technology-used)
   - [Other tech used](#other-tech-used)
@@ -15,7 +15,7 @@
   - [Project development roadmap](#project-development-roadmap)
 - [Additional details](#additional-details)
   - [How to run the project](#how-to-run-the-project)
-- [Contributing](#contributing)
+- [About us](#contributing)
 
 
 ## Project summary
@@ -83,7 +83,7 @@ Diagram and step-by-step description of the flow of our solution:
 
 ### Solution demo video
 
-[![Watch the video](images/logo.png)](images/logo.png)
+[![Watch the video](images/logo.png)]([images/logo.png](https://www.youtube.com/watch?v=XU75TarxAHI))
 
 ### Project development roadmap
 The project currently does the following things.
@@ -92,6 +92,7 @@ The project currently does the following things.
 - Give detailed explaination for score
 - Create graph for score
 
+## Additional details
 
 ### How to run the project
 
