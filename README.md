@@ -46,18 +46,18 @@ By integrating advanced AI capabilities, our solution not only streamlines the d
 - **meta-llama/llama-3-8b-instruct**: This model provides advanced instruction-following capabilities, offering intelligent recommendations based on parameters. 
 
 
-### IBM service used :  
+### IBM services used :  
 
-- **IBM Watsonx Text-to-Speech**: We integrated the text-to-speech functionality of Watsonx to convert the text-based output into an audible format for better accessibility, which we even used for demo video creation.
+- **IBM Watsonx Text-to-Speech**: We used the text-to-speech functionality of Watsonx to convert the text-based output into an audible format for better accessibility, which we used for demo video creation.
 
 
-### Other IBM technology used :
+### Other IBM technologies used :
 
 - **IBM Cloud**: Used to host and deploy the AI models, providing the necessary infrastructure to handle computational workloads and ensure scalable performance for the solution. 
 
 - **IBM Watson Studio**: Utilized for model training, data preprocessing, and analysis, improving the prediction accuracy of construction parameters by providing a collaborative environment for data scientists and developers. 
 
-- **IBM Watson Prompt Lab**: Leveraged for creating and refining AI prompts that optimize the interaction between the user and the AI model. This tool helps generate more accurate and relevant responses by allowing developers to test and customize AI prompts, enhancing the solution's decision-making process. 
+- **IBM Watson Prompt Lab**: Leveraged for creating and refining AI prompts that optimize the interaction between the user and the AI model. This tool helped us generate more accurate and relevant responses by allowing developers to test and customize AI prompts, enhancing the solution's decision-making process. 
 
 
 ### Other technology used : 
