@@ -17,8 +17,7 @@ unique_id = ""
 OPENWEATHER_API_KEY = '<api-key>'
 
 # Watsonx.ai API settings
-# WATSONX_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-WATSONX_URL = "https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
+WATSONX_URL = "<url>"
 WATSONX_MODEL_ID = "meta-llama/llama-3-8b-instruct"
 WATSONX_MODEL_ID2 = "ibm/granite-13b-chat-v2"
 WATSONX_PROJECT_ID = "<id>"
@@ -62,7 +61,8 @@ def extract_json_from_markdown(response_text):
 
 def extract_add_score(text):
     print(text)
-    match = re.search(r'Average Score:\s*([\d.]+)/10', text)
+    # match = re.search(r'Average Score:\s*([\d.]+)/10', text)
+    match = re.search(r'Average score:\s*(\d+\.\d+)/10', text)
     print("Match is ")
     print(match)
     if match:
@@ -82,7 +82,7 @@ def get_watsonx_info(buildingtype, lat, lon, name):
     7.terrain history in aspect of whether that land is prone to natural calamities
     8.Safety Standards
     9.Pollution/Noise considerations in this area
-    Please respond exact details in measurement or numbers in very short and exact with only in **valid JSON** format only, no any other text"""
+    Please respond exact details in measurement or numbers in very short and exact with only in **valid JSON** in ```json ``` format only, no any other text"""
     body = {
         "input": prompt,
         "parameters": {
@@ -260,7 +260,7 @@ def index():
         }
         save_data(data_store)
         
-        time.sleep(1)
+        time.sleep(18)
         # OpenWeather API call
         api_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}"
         try:
