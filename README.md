@@ -22,7 +22,7 @@
 
 ### The issue we are hoping to solve
 
-In both India and globally, equitable access to land for construction poses significant challenges, leading to disparities in housing quality, safety, and overall living conditions. The lack of access to suitable land affects marginalized communities disproportionately, resulting in inadequate housing solutions and perpetuating cycles of poverty. Addressing these issues is essential to ensure safe and sustainable living environments for all, while promoting social equity and community resilience. 
+In India and globally, equitable access to land for construction poses significant challenges, leading to disparities in housing quality, safety, and overall living conditions. The lack of access to suitable land affects marginalized communities disproportionately, resulting in inadequate housing solutions and perpetuating cycles of poverty. Addressing these issues is essential to ensure safe and sustainable living environments for all, while promoting social equity and community resilience. 
 
 
 ### How our technology solution can help
