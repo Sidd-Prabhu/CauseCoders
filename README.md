@@ -83,7 +83,7 @@ Diagram and step-by-step description of the flow of our solution:
 
 ### Solution demo video
 
-[![Watch the video](images/logo.png)]([images/logo.png](https://www.youtube.com/watch?v=XU75TarxAHI))
+[![Watch the video](images/Causecoders.png)](https://www.youtube.com/watch?v=XU75TarxAHI)
 
 ### Project development roadmap
 The project currently does the following things.
